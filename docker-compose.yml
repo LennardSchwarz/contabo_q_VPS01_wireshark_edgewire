@@ -1,0 +1,31 @@
+services:
+  wireshark:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    pull_policy: build # For Portainer to rebuild the image
+    container_name: wireshark
+    cap_add:
+      - NET_ADMIN
+    security_opt:
+      - seccomp:unconfined #optional
+    #network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - CUSTOM_USER=${CUSTOM_USER}
+      - PASSWORD=Payphone-Leotard-Magician-Tackle7
+    networks:
+      - traefik-proxy # expose to proxy network
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true" # enable traefik for this docker container
+      - "traefik.http.routers.qwireshark.rule=Host(`wireshark.q.lennardschwarz.me`)" # set router name and subdomain
+      - "traefik.http.routers.qwireshark.entrypoints=websecure" # set entry points (80 web; 443 websecure)
+      - "traefik.http.services.qwireshark.loadbalancer.server.port=3000" # set port that is fowarded to internally by treafik (3000 by default)
+      - "traefik.http.routers.qwireshark.tls.certresolver=letsencryptresolver" # set ssl resolver to use for this route
+
+
+networks:
+  traefik-proxy:
+    external: true # use public network
