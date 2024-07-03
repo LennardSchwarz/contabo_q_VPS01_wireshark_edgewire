@@ -14,7 +14,7 @@ services:
       - PUID=1000
       - PGID=1000
       - CUSTOM_USER=${CUSTOM_USER}
-      - PASSWORD=Payphone-Leotard-Magician-Tackle7
+      - PASSWORD=${PASSWORD}
     networks:
       - traefik-proxy # expose to proxy network
     restart: unless-stopped
@@ -24,7 +24,6 @@ services:
       - "traefik.http.routers.qwireshark.entrypoints=websecure" # set entry points (80 web; 443 websecure)
       - "traefik.http.services.qwireshark.loadbalancer.server.port=3000" # set port that is fowarded to internally by treafik (3000 by default)
       - "traefik.http.routers.qwireshark.tls.certresolver=letsencryptresolver" # set ssl resolver to use for this route
-
 
 networks:
   traefik-proxy:
