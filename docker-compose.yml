@@ -17,6 +17,8 @@ services:
       - PASSWORD=${PASSWORD}
     networks:
       - traefik-proxy # expose to proxy network
+    extra_hosts:
+      - "host.docker.internal:host-gateway" # 127.0.0.1 will point to host now
     restart: unless-stopped
     labels:
       - "traefik.enable=true" # enable traefik for this docker container
