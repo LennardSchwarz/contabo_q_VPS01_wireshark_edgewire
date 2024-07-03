@@ -31,3 +31,5 @@ services:
 networks:
   traefik-proxy:
     external: true # use public network
+  ghost-in-da-edge:
+    external: true
