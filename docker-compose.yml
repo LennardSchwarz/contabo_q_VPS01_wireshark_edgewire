@@ -27,6 +27,7 @@ services:
       - "traefik.http.routers.qwireshark.entrypoints=websecure" # set entry points (80 web; 443 websecure)
       - "traefik.http.services.qwireshark.loadbalancer.server.port=3000" # set port that is fowarded to internally by treafik (3000 by default)
       - "traefik.http.routers.qwireshark.tls.certresolver=letsencryptresolver" # set ssl resolver to use for this route
+      - "com.centurylinklabs.watchtower.enable=false" # disable watchtower for this container
 
 networks:
   traefik-proxy:
